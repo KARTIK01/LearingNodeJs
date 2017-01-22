@@ -24,9 +24,10 @@ const uuid    = require('uuid');
 const chalk   = require('chalk');
 const express = require('express');
 
-const co    = Promise.coroutine;
-const debug = require('debug')('chatteron:boot:init');
+const co  = Promise.coroutine;
+var debug = require('debug')('learningnodejs:boot:init');
 
+const api           = require('./api');
 const models        = require('./models');
 const ServerFactory = require('./Server');
 let init            = co(function*() {
@@ -41,8 +42,9 @@ let init            = co(function*() {
         // yield Promise.all([models.init()]);
         // debug('Models & database done');
 
+        yield Promise.all([api.init()]);
         // yield Promise.all([api.init(), cronJobs.init()]);
-        // debug('API done');
+        debug('API done');
 
         // return permissions.init();
         debug('Permissions done');

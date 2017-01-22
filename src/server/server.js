@@ -33,12 +33,12 @@ class Server {
             self.httpServer.on('error', error => {
                 let serverError;
                 if (error.errno === 'EADDRINUSE') {
-                    serverError = new errors.ChatteronError({
+                    serverError = new errors.CustomError({
                         message: `(EADDRINUSE) Cannot start Server. Port  ${port} 
                                 is already in use by another program. Is another Server instance already running?`
                     });
                 } else {
-                    serverError = new errors.ChatteronError({
+                    serverError = new errors.CustomError({
                         message: `(Code: ' ${error.errno} ')``There was an error starting your server.`
                             `Please use the error code above to search for a solution.`
                     });

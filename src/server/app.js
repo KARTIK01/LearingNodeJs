@@ -1,6 +1,5 @@
 import express from "express";
-import config from "./config";
-const debug = require('debug')('chatteron:app');
+var debug = require('debug')('learningnodejs:app');
 
 module.exports = function setupParentApp() {
     debug('ParentApp setup start');
@@ -44,8 +43,8 @@ module.exports = function setupParentApp() {
 
     // Mount the  apps on the parentApp
     // API
-    // let apiApp = require('./api/app')();
-    // parentApp.use('/api', apiApp);
+    let apiApp = require('./api/app')();
+    parentApp.use('/api', apiApp);
 
     // let cacheTime = 86400000;
     // let uploadPath = localStore.getBaseDir();
