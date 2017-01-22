@@ -18,6 +18,77 @@ init = function init() {
     return Promise.resolve(true);
 };
 
+/**
+ * ### Cache Invalidation Header
+ * Calculate the header string for the X-Cache-Invalidate: header.
+ * The resulting string instructs any cache in front of the blog that request has occurred which invalidates any cached
+ * versions of the listed URIs.
+ *
+ * `/*` is used to mean the entire cache is invalid
+ *
+ * @private
+ * @param {Express.request} req Original HTTP Request
+ * @param {Object} result API method result
+ * @return {String} Resolves to header string
+ */
+cacheInvalidationHeader = function cacheInvalidationHeader(req, result) {
+    var parsedUrl  = req._parsedUrl.pathname.replace(/^\/|\/$/g, '').split('/'),
+        method     = req.method,
+        endpoint   = parsedUrl[0],
+        cacheInvalidate,
+        jsonResult = result.toJSON ? result.toJSON() : result,
+        post,
+        hasStatusChanged,
+        wasDeleted,
+        wasPublishedUpdated;
+
+    if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
+        if (endpoint === 'settings' || endpoint === 'users' || endpoint === 'db' || endpoint === 'tags') {
+            cacheInvalidate = '/*';
+        } else if (endpoint === 'posts') {
+            post                = jsonResult.posts[0];
+            hasStatusChanged    = post.statusChanged;
+            wasDeleted          = method === 'DELETE';
+            // Invalidate cache when post was updated but not when post is draft
+            wasPublishedUpdated = method === 'PUT' && post.status === 'published';
+
+            // Remove the statusChanged value from the response
+            delete post.statusChanged;
+
+            // Don't set x-cache-invalidate header for drafts
+            if (hasStatusChanged || wasDeleted || wasPublishedUpdated) {
+                cacheInvalidate = '/*';
+            } else {
+                cacheInvalidate = '/' + config.routeKeywords.preview + '/' + post.uuid + '/';
+            }
+        }
+    }
+
+    return cacheInvalidate;
+};
+
+addHeaders = function addHeaders(apiMethod, req, res, result) {
+    var cacheInvalidation,
+        location,
+        contentDisposition;
+
+    cacheInvalidation = cacheInvalidationHeader(req, result);
+    if (cacheInvalidation) {
+        res.set({'X-Cache-Invalidate': cacheInvalidation});
+    }
+
+    if (req.method === 'POST') {
+        location = locationHeader(req, result);
+        if (location) {
+            res.set({Location: location});
+            // The location header indicates that a new object was created.
+            // In this case the status code should be 201 Created
+            res.status(201);
+        }
+    }
+
+    return contentDisposition;
+};
 
 http = function http(apiMethod) {
     return function apiHandler(req, res, next) {

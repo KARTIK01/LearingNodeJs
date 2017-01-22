@@ -39,8 +39,8 @@ let init            = co(function*() {
         // debug('I18n done');
 
         // Initialise the models
-        // yield Promise.all([models.init()]);
-        // debug('Models & database done');
+        yield Promise.all([models.init()]);
+        debug('Models & database done');
 
         yield Promise.all([api.init()]);
         // yield Promise.all([api.init(), cronJobs.init()]);
