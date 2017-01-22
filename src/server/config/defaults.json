@@ -1,0 +1,32 @@
+{
+  "url": "http://localhost:8080",
+  "urlSSL": false,
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8080
+  },
+  "database": {
+    "host": "localhost",
+    "port": 27017,
+    "schema": "learning_node",
+    "user": "",
+    "password": "",
+    "debug": false
+  },
+  "paths": {
+    "contentPath": "content/"
+  },
+  "privacy": false,
+  "storage": {
+    "active": {
+      "images": "local-file-store"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "rotation": false,
+    "transports": [
+      "stdout"
+    ]
+  }
+}
