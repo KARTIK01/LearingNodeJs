@@ -1,5 +1,7 @@
 import express from "express";
-var debug = require('debug')('learningnodejs:app');
+// import logRequest from "./middleware/log-request";
+var debug  = require('debug')('learningnodejs:app');
+var logger = require('morgan');
 
 module.exports = function setupParentApp() {
     debug('ParentApp setup start');
@@ -14,7 +16,7 @@ module.exports = function setupParentApp() {
 
 
     // request logging
-    // parentApp.use(logRequest);
+    parentApp.use(logger('dev'));
 
     // if (debug.enabled) {
     //     // debug keeps a timer, so this is super useful
