@@ -22,7 +22,14 @@ function apiRoutes() {
     // enable cors
     // apiRouter.use(cors);
 
+    //######################################## USER API ########################################
     apiRouter.post('/users', api.http(api.usersApi.register));
+    apiRouter.get('/users/check-email', api.http(api.usersApi.checkEmailAvailable));
+    apiRouter.get('/users/login-signup', api.http(api.usersApi.loginOrRegister));
+    apiRouter.post('/users/forgot-password', api.http(api.usersApi.forgotPassword));
+    apiRouter.post('/users/reset-password', api.http(api.usersApi.resetPassword));
+
+    // apiRouter.put('/users/password', authenticateUser, api.http(api.usersApi.updateLoginPassword));
 
     return apiRouter;
 };

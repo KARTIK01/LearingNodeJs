@@ -90,3 +90,21 @@ export class NotFoundError extends CustomError {
         this.errorType = this.constructor.name;
     }
 }
+
+export class BadRequestError extends CustomError {
+    constructor(options) {
+        super(_.merge({
+            statusCode: 400
+        }, options));
+        this.errorType = this.constructor.name;
+    }
+}
+
+export class ValidationError extends CustomError {
+    constructor(options) {
+        super(_.merge({
+            statusCode: 422
+        }, options));
+        this.errorType = this.constructor.name;
+    }
+}
