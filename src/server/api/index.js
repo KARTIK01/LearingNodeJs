@@ -90,6 +90,42 @@ addHeaders = function addHeaders(apiMethod, req, res, result) {
     return contentDisposition;
 };
 
+/**
+ * ### Location Header
+ *
+ * If the API request results in the creation of a new object, construct a Location: header which points to the new
+ * resource.
+ *
+ * @private
+ * @param {Express.request} req Original HTTP Request
+ * @param {Object} result API method result
+ * @return {String} Resolves to header string
+ */
+locationHeader = function locationHeader(req, result) {
+    var apiRoot,
+        location,
+        newObject;
+
+    if (req.method === 'POST') {
+        //if (result.hasOwnProperty('posts')) {
+        //    newObject = result.posts[0];
+        //    location  = apiRoot + '/posts/' + newObject.id + '/?status=' + newObject.status;
+        //} else if (result.hasOwnProperty('notifications')) {
+        //    newObject = result.notifications[0];
+        //    location  = apiRoot + '/notifications/' + newObject.id + '/';
+        //} else if (result.hasOwnProperty('users')) {
+        //    newObject = result.users[0];
+        //    location  = apiRoot + '/users/' + newObject.id + '/';
+        //} else if (result.hasOwnProperty('tags')) {
+        //    newObject = result.tags[0];
+        //    location  = apiRoot + '/tags/' + newObject.id + '/';
+        //}
+    }
+
+    return location;
+};
+
+
 http = function http(apiMethod) {
     return function apiHandler(req, res, next) {
         // We define 2 properties for using as arguments in API calls:

@@ -16,3 +16,8 @@ make this entry at bottom
 `127.0.0.1	learnnode.io`
 
 `$ nodemon src/server/index.js` 
+
+###Debug
+
+`node-debug --web-port=8989`
+

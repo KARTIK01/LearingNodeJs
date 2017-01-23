@@ -4,7 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 // This essentially provides the controllers for the routes
 import api from "../api";
-
+import errorHandler from "../middleware/error-handler";
 const debug = require('debug')('learningnodejs:app');
 
 // import checkSSL from '../middleware/check-ssl'
@@ -22,7 +22,7 @@ function apiRoutes() {
     // enable cors
     // apiRouter.use(cors);
 
-    apiRouter.get('/users/login', api.http(api.usersApi.login));
+    apiRouter.post('/users', api.http(api.usersApi.register));
 
     return apiRouter;
 };
@@ -60,8 +60,8 @@ module.exports = function setupApiApp() {
     apiApp.use(apiRoutes());
 
     // API error handling
-    // apiApp.use(errorHandler.resourceNotFound);
-    // apiApp.use(errorHandler.handleJSONResponse);
+    apiApp.use(errorHandler.resourceNotFound);
+    apiApp.use(errorHandler.handleJSONResponse);
 
     debug('API setup end');
 
