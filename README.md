@@ -21,3 +21,29 @@ make this entry at bottom
 
 `node-debug --web-port=8989`
 
+
+
+
+
+##SET UP Elastic Search
+
+###Install
+
+`brew install elasticsearch`
+
+###Configuration
+
+Update the elasticsearch configuration file in `/usr/local/etc/elasticsearch/elasticsearch.yml`.
+
+Set the value below to false:
+
+```discovery.zen.ping.multicast.enabled: false #(it's true by default)```
+
+###How to start it
+
+If `brew services start elasticsearch` doesn't work for you, check the instructions when you run `brew info elasticsearch`.
+
+###CHECK
+
+Visit `http://localhost:9200/`
+
