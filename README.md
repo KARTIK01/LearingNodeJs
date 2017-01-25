@@ -21,6 +21,10 @@ make this entry at bottom
 
 `node-debug --web-port=8989`
 
+##Set Node ENV
+`subl ~/.exports`
+`export NODE_ENV=development`
+
 
 
 
