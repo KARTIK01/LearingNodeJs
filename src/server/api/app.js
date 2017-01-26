@@ -28,8 +28,11 @@ function apiRoutes() {
     apiRouter.get('/users/login-signup', api.http(api.usersApi.loginOrRegister));
     apiRouter.post('/users/forgot-password', api.http(api.usersApi.forgotPassword));
     apiRouter.post('/users/reset-password', api.http(api.usersApi.resetPassword));
-
     // apiRouter.put('/users/password', authenticateUser, api.http(api.usersApi.updateLoginPassword));
+
+
+    //######################################## JOKES API ########################################
+    apiRouter.get('/jokes', api.http(api.jokesApi.fetchJokes));
 
     return apiRouter;
 };

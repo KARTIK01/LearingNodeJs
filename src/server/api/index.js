@@ -3,6 +3,7 @@
 // import config from '../config'
 // Include Endpoints
 import usersApi from "./user-account";
+import jokesApi from "./jokes";
 import _ from "lodash";
 
 
@@ -180,5 +181,6 @@ module.exports =
         http,
 
         // api end points
-        usersApi
+        usersApi,
+        jokesApi
     };
