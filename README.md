@@ -2,7 +2,7 @@
 
 ## STEPS
 
-get config.developemnt.json file from requesting and paste that in `src/server/config/env` 
+get config.developemnt.json file from owner of the project and paste that in `src/server/config/env` 
 
 
 `$ cd {{project}}`
