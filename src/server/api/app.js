@@ -3,12 +3,17 @@ import express from "express";
 //shared
 import bodyParser from "body-parser";
 // This essentially provides the controllers for the routes
+import auth from '../auth'
 import api from "../api";
 import errorHandler from "../middleware/error-handler";
 const debug = require('debug')('learningnodejs:app');
 
 // import checkSSL from '../middleware/check-ssl'
 // import maintenance from '../middleware/maintenance'
+
+const authenticateUser = [
+    // auth.authenticate.authenticateUser
+];
 
 function apiRoutes() {
     let apiRouter = express.Router();
@@ -28,11 +33,12 @@ function apiRoutes() {
     apiRouter.get('/users/login-signup', api.http(api.usersApi.loginOrRegister));
     apiRouter.post('/users/forgot-password', api.http(api.usersApi.forgotPassword));
     apiRouter.post('/users/reset-password', api.http(api.usersApi.resetPassword));
-    // apiRouter.put('/users/password', authenticateUser, api.http(api.usersApi.updateLoginPassword));
+    apiRouter.put('/users/password', authenticateUser, api.http(api.usersApi.checkEmailAvailable));
 
 
     //######################################## JOKES API ########################################
     apiRouter.get('/jokes', api.http(api.jokesApi.fetchJokes));
+    apiRouter.put('/jokes', api.http(api.jokesApi.saveSingleJoke));
 
     return apiRouter;
 };
@@ -43,10 +49,10 @@ module.exports = function setupApiApp() {
     let apiApp = express();
 // API middleware
     // parse application/json
-    apiApp.use(bodyParser.json({limit: '3mb'}));
+    apiApp.use(bodyParser.json({ limit:'3mb' }));
 
     // parse application/x-www-form-urlencoded
-    apiApp.use(bodyParser.urlencoded({extended: true, limit: '5mb'}));
+    apiApp.use(bodyParser.urlencoded({ extended:true, limit:'5mb' }));
 
     // send 503 json response in case of maintenance
     // apiApp.use(maintenance);

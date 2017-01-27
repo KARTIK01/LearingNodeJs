@@ -1,0 +1,66 @@
+{
+  "paths": {
+    "appRoot": ".",
+    "uploads": "content/uploads/"
+  },
+  "mail": [
+    {
+      "from": "kartikagarwal01@gmail.com",
+      "options": {
+        "service": "Mailgun",
+        "host": "smtp.mailgun.org",
+        "auth": {
+          "user": "email@doamin.io",
+          "pass": "1234567890"
+        }
+      }
+    },
+    {
+      "from": "do-reply@chatteron.io",
+      "options": {
+        "service": "Mailgun",
+        "host": "smtp.mailgun.org",
+        "auth": {
+          "user": "email@domain.io",
+          "pass": "1234567890-"
+        }
+      }
+    },
+    {
+      "from": "adit@chatteron.io",
+      "options": {
+        "service": "Mailgun",
+        "host": "smtp.mailgun.org",
+        "auth": {
+          "user": "email@domain.io",
+          "pass": "1234567890"
+        }
+      }
+    },
+    {
+      "from": "abc@gmail.com",
+      "service": "Gmail",
+      "options": {
+        "user": "",
+        "client_id": "",
+        "refresh_token": "",
+        "client_secret": ""
+      }
+    }
+  ],
+  "routeKeywords": {
+    "tag": "tag",
+    "author": "author",
+    "page": "page",
+    "preview": "p",
+    "private": "private",
+    "subscribe": "subscribe",
+    "amp": "amp"
+  },
+  "theme": {
+    "timezone": "Etc/UTC"
+  },
+  "maintenance": {
+    "enabled": false
+  }
+}
