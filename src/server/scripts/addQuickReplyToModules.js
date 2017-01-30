@@ -78,35 +78,37 @@ let options = {
     json   :true
 };
 
-
-class Demo {
-    async runWebhook() {
-
-    }
-}
-
 let init = co(function*() {
     _.map(modules, module => {
         options.method = "GET";
         options.uri = `${baseUrl}/${module}`;
 
+
         request(options)
             .then(response => {
-                // console.log("res() : ", module, response.module.botActions);
+                let newAction = response.module.botActions;
 
-                response.module.botActions[response.module.botActions.length - 1].quickReplies = quickReplies;
+                newAction[newAction.length - 1].message.quickReplies = quickReplies;
 
-                options.method = "PUT";
-                options.body = {
-                    nodes:{
-                        botActions:response.module.botActions
+                let newOptions = {
+                    uri    :`${baseUrl}/${module}`,
+                    method :'PUT',
+                    headers:{
+                        'Authorization':authToken
+                    },
+                    json   :true
+                };
+
+                newOptions.body = {
+                    node:{
+                        botActions:newAction
                     }
                 };
 
-                request(options)
-                    .then(response => {
-                        console.log("response() : ", response);
-                    });
+                return request(newOptions);
+            })
+            .then(response => {
+                console.log("response() : ", response);
             })
             .catch(err => {
                 console.log("ERRROR() : ", err);

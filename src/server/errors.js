@@ -3,7 +3,7 @@ import uuid from "uuid";
 export class CustomError extends Error {
     constructor(options) {
         super(options.message);
-        options    = options || {};
+        options = options || {};
         const self = this;
         if (_.isString(options)) {
             throw new Error('Please instantiate Errors with the option pattern. e.g. new errors.CustomError({message: ...})');
@@ -15,32 +15,31 @@ export class CustomError extends Error {
          */
         this.statusCode = 500;
         this.errorType = 'InternalServerError';
-        this.level     = 'normal';
-        this.id        = uuid.v1();
+        this.level = 'normal';
+        this.id = uuid.v1();
 
         /**
          * custom overrides
          */
         this.statusCode = options.statusCode || this.statusCode;
-        this.level     = options.level || this.level;
-        this.context   = options.context || this.context;
-        this.help      = options.help || this.help;
+        this.level = options.level || this.level;
+        this.context = options.context || this.context;
+        this.help = options.help || this.help;
         this.errorType = this.name = options.errorType || this.errorType;
         this.errorDetails = options.errorDetails;
-        this.code         = options.code || null;
+        this.code = options.code || null;
 
         // @TODO: ?
         this.property = options.property;
-        this.value    = options.value;
+        this.value = options.value;
 
-        this.message   = options.message;
+        this.message = options.message;
         this.hideStack = options.hideStack;
 
         // replace double quotes with single in the error message
         // this.message = (this.message || "").replace(/"/g, "'");
 
         // error to inherit from, override!
-        console.log("ok() : 1", options);
         // nested objects are getting copied over in one piece (can be changed, but not needed right now)
         if (options.err) {
 
@@ -76,7 +75,7 @@ export class CustomError extends Error {
 export class UnauthorizedError extends CustomError {
     constructor(options) {
         super(_.merge({
-            statusCode: 401
+            statusCode:401
         }, options));
         this.errorType = this.constructor.name;
     }
@@ -85,7 +84,7 @@ export class UnauthorizedError extends CustomError {
 export class NotFoundError extends CustomError {
     constructor(options) {
         super(_.merge({
-            statusCode: 404
+            statusCode:404
         }, options));
         this.errorType = this.constructor.name;
     }
@@ -94,7 +93,7 @@ export class NotFoundError extends CustomError {
 export class BadRequestError extends CustomError {
     constructor(options) {
         super(_.merge({
-            statusCode: 400
+            statusCode:400
         }, options));
         this.errorType = this.constructor.name;
     }
@@ -103,7 +102,7 @@ export class BadRequestError extends CustomError {
 export class ValidationError extends CustomError {
     constructor(options) {
         super(_.merge({
-            statusCode: 422
+            statusCode:422
         }, options));
         this.errorType = this.constructor.name;
     }

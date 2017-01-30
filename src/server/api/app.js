@@ -12,7 +12,7 @@ const debug = require('debug')('learningnodejs:app');
 // import maintenance from '../middleware/maintenance'
 
 const authenticateUser = [
-    // auth.authenticate.authenticateUser
+    auth.authenticate.authenticateUser
 ];
 
 function apiRoutes() {
@@ -27,12 +27,16 @@ function apiRoutes() {
     // enable cors
     // apiRouter.use(cors);
 
+    apiRouter.get('/email-verification', api.http(api.usersApi.verifyEmail));
+
     //######################################## USER API ########################################
     apiRouter.post('/users', api.http(api.usersApi.register));
-    apiRouter.get('/users/check-email', api.http(api.usersApi.checkEmailAvailable));
-    apiRouter.get('/users/login-signup', api.http(api.usersApi.loginOrRegister));
-    apiRouter.post('/users/forgot-password', api.http(api.usersApi.forgotPassword));
+    apiRouter.post('/users/login-signup', api.http(api.usersApi.loginOrRegister));
+    apiRouter.post('/users/login', api.http(api.usersApi.login));
     apiRouter.post('/users/reset-password', api.http(api.usersApi.resetPassword));
+    apiRouter.post('/users/forgot-password', api.http(api.usersApi.forgotPassword));
+    apiRouter.get('/users/check-email', api.http(api.usersApi.checkEmailAvailable));
+
     apiRouter.put('/users/password', authenticateUser, api.http(api.usersApi.checkEmailAvailable));
 
 
