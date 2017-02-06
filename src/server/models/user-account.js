@@ -4,6 +4,7 @@ const compareAsync = Promise.promisify(bcrypt.compare);
 
 const UserSchema = new Schema({
     email   :{ type:String, trim:true },
+    mobileNo:{ type:String, trim:true },
     password:{ type:String }
 });
 

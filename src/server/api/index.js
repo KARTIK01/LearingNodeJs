@@ -4,6 +4,7 @@
 // Include Endpoints
 import usersApi from "./user-account";
 import jokesApi from "./jokes";
+import booksApi from "./books";
 import _ from "lodash";
 
 
@@ -33,9 +34,9 @@ init = function init() {
  * @return {String} Resolves to header string
  */
 cacheInvalidationHeader = function cacheInvalidationHeader(req, result) {
-    var parsedUrl  = req._parsedUrl.pathname.replace(/^\/|\/$/g, '').split('/'),
-        method     = req.method,
-        endpoint   = parsedUrl[0],
+    var parsedUrl = req._parsedUrl.pathname.replace(/^\/|\/$/g, '').split('/'),
+        method = req.method,
+        endpoint = parsedUrl[0],
         cacheInvalidate,
         jsonResult = result.toJSON ? result.toJSON() : result,
         post,
@@ -47,9 +48,9 @@ cacheInvalidationHeader = function cacheInvalidationHeader(req, result) {
         if (endpoint === 'settings' || endpoint === 'users' || endpoint === 'db' || endpoint === 'tags') {
             cacheInvalidate = '/*';
         } else if (endpoint === 'posts') {
-            post                = jsonResult.posts[0];
-            hasStatusChanged    = post.statusChanged;
-            wasDeleted          = method === 'DELETE';
+            post = jsonResult.posts[0];
+            hasStatusChanged = post.statusChanged;
+            wasDeleted = method === 'DELETE';
             // Invalidate cache when post was updated but not when post is draft
             wasPublishedUpdated = method === 'PUT' && post.status === 'published';
 
@@ -75,13 +76,13 @@ addHeaders = function addHeaders(apiMethod, req, res, result) {
 
     cacheInvalidation = cacheInvalidationHeader(req, result);
     if (cacheInvalidation) {
-        res.set({'X-Cache-Invalidate': cacheInvalidation});
+        res.set({ 'X-Cache-Invalidate':cacheInvalidation });
     }
 
     if (req.method === 'POST') {
         location = locationHeader(req, result);
         if (location) {
-            res.set({Location: location});
+            res.set({ Location:location });
             // The location header indicates that a new object was created.
             // In this case the status code should be 201 Created
             res.status(201);
@@ -130,12 +131,12 @@ locationHeader = function locationHeader(req, result) {
 http = function http(apiMethod) {
     return function apiHandler(req, res, next) {
         // We define 2 properties for using as arguments in API calls:
-        let object      = req.body,
+        let object = req.body,
             requestKeys = ['file', 'files', 'headers', 'params', 'query'],
-            options     = _.extend({}, _.pick(req, requestKeys));
+            options = _.extend({}, _.pick(req, requestKeys));
 
         _.extend(options, {
-            user: req.user ? req.user : null
+            user:req.user ? req.user : null
         });
 
         return apiMethod(object, options)
@@ -182,5 +183,6 @@ module.exports =
 
         // api end points
         usersApi,
-        jokesApi
+        jokesApi,
+        booksApi
     };

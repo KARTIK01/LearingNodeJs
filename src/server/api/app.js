@@ -44,6 +44,18 @@ function apiRoutes() {
     apiRouter.get('/jokes', api.http(api.jokesApi.fetchJokes));
     apiRouter.put('/jokes', api.http(api.jokesApi.saveSingleJoke));
 
+    //######################################## BOOKS API USER ########################################
+    apiRouter.post('/users/register', api.http(api.booksApi.registerUser));
+
+    //######################################## BOOKS API ########################################
+    apiRouter.get('/users/:userID/books/', api.http(api.booksApi.getBooks));
+    apiRouter.put('/users/:userID/books/', api.http(api.booksApi.saveBooks));
+    apiRouter.get('/users/:userID/books/:bookID', api.http(api.booksApi.getBook));
+    apiRouter.del('/users/:userID/books/:bookID', api.http(api.booksApi.deleteBook));
+
+    apiRouter.get('/fetchBook', api.http(api.booksApi.fetchBook));
+
+
     return apiRouter;
 };
 
