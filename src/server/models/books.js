@@ -2,11 +2,6 @@ import mongoose, {Schema} from "mongoose";
 import _ from "lodash";
 import {LANGUAGE, BOOKS_CATEGORY, BOOKS_CONDITION} from "../constants/database";
 
-const Location = new Schema({
-    latitude :{ type:Number },
-    longitude:{ type:Number },
-});
-
 const BooksSchema = new Schema({
 
     tittle:{ type:String, required:true },
@@ -19,7 +14,9 @@ const BooksSchema = new Schema({
 
     currentPrize:{ type:Number },
 
-    location:{ type:Location, required:true },
+    //http://stackoverflow.com/questions/25734092/query-locations-within-a-radius
+    //https://www.compose.com/articles/geofile-everything-in-the-radius-with-mongodb-geospatial-queries/
+    location:{ type:{ type:String }, coordinates:[Number] },
 
     categories:[{ type:String, enum:_.values(BOOKS_CATEGORY), required:true }],
 
@@ -31,6 +28,7 @@ const BooksSchema = new Schema({
         type:Schema.ObjectId, ref:'User', required:true
     }
 });
+
 
 const Jokes = mongoose.model('Books', BooksSchema);
 export default Jokes;

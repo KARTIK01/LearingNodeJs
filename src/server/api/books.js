@@ -66,7 +66,13 @@ const booksApi = {
 
         if (_.isArray(books)) {
             _.forEach(books, book => {
-                _.extend(book, { user:userID });
+                _.extend(book, {
+                    user    :userID,
+                    location:{
+                        type       :"Point",
+                        coordinates:[book.location.longitude, book.location.latitude]
+                    }
+                });
             });
             saveData = await Books.insertMany(books);
         }
@@ -97,7 +103,7 @@ const booksApi = {
 
     async fetchBook(object, options){
         let { params : urlParams } = options;
-        let { longitude, latitude , radius = DEFAULT_RADIUS } =urlParams;
+        let { longitude, latitude, radius = DEFAULT_RADIUS } =urlParams;
     }
 };
 
