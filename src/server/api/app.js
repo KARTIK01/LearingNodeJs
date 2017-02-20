@@ -53,7 +53,9 @@ function apiRoutes() {
     apiRouter.get('/users/:userID/books/:bookID', api.http(api.booksApi.getBook));
     apiRouter.del('/users/:userID/books/:bookID', api.http(api.booksApi.deleteBook));
 
-    apiRouter.get('/fetchBook', api.http(api.booksApi.fetchBook));
+    apiRouter.get('/fetchBooks', api.http(api.booksApi.fetchBook));
+
+    apiRouter.get('/fetchBooks', api.http(api.booksApi.fetchBookTest));
 
 
     return apiRouter;

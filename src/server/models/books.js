@@ -24,11 +24,9 @@ const BooksSchema = new Schema({
 
     language:{ type:String, enum:_.values(LANGUAGE) },
 
-    user:{
-        type:Schema.ObjectId, ref:'User', required:true
-    }
+    user:{ type:Schema.ObjectId, ref:'User', required:true }
 });
 
 
-const Jokes = mongoose.model('Books', BooksSchema);
-export default Jokes;
+const Books = mongoose.model('Books', BooksSchema);
+export default Books;

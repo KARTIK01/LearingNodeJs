@@ -104,7 +104,22 @@ const booksApi = {
     async fetchBook(object, options){
         let { params : urlParams } = options;
         let { longitude, latitude, radius = DEFAULT_RADIUS } =urlParams;
-    }
+
+        let query = {
+            "location":{
+                $geoWithin:{
+                    $centerSphere:[[77.229500000000001592, 28.0], apiUtils.milesToRadian(radius)]
+                }
+            }
+        };
+
+        let response = await Books.find(query);
+
+        return {
+            message :`Books fetch successfully`,
+            response:response
+        }
+    },
 };
 
 export default booksApi;
